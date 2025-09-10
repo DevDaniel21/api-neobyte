@@ -1,11 +1,16 @@
 import express from "express";
+import { createUserController } from '../controllers/user/createUserController.js';
+import { listUserController } from '../controllers/user/listUserController.js';
+import { getByIdUserController } from '../controllers/user/getByIdUserController.js';
+import { editUserController } from '../controllers/user/editUserController.js';
+import { deleteUserController } from '../controllers/user/deleteUserController.js';
 
 const router = express.Router();
 
-router.post('/', (req, res) => {res.json({message: 'Post do user'})});
-router.get('/', (req, res) => {res.json({message: 'Lista do user'})});
-router.get('/:id', (req, res) => {res.json({message: 'GetById do user'})});
-router.put('/:id', (req, res) => {res.json({message: 'Put do user'})});
-router.delete('/:id', (req, res) => {res.json({message: 'Delete do user'})});
+router.post('/', createUserController);
+router.get('/', listUserController);
+router.get('/:id', getByIdUserController);
+router.put('/:id', editUserController);
+router.delete('/:id', deleteUserController);
 
 export default router;

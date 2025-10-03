@@ -19,6 +19,12 @@ export const list = async () => {
     return prisma.user.findMany();
 };
 
+export const getByEmail = async (email) => {
+    return await prisma.user.findUnique({
+        where: { email },
+    });
+};
+
 export const getById = async (id) => {
     return await prisma.user.findUnique({
         where: { id },

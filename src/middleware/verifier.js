@@ -1,3 +1,3 @@
-export default verifier = (req, res, next) => {
+// export default verifier = (req, res, next) => {
 
-}
+// }

@@ -5,8 +5,12 @@ export const createUserController = async (req, res) => {
 
     const result = await create(dados);
 
-    res.json({
-        message: 'Usuário criado com sucesso!',
-        profile: result,
-    });
+    if (result) {
+        res.json({
+            message: 'Usuário criado com sucesso!',
+            profile: result,
+        });
+    } else {
+        res.json({ message: 'Erro ao criar!' });
+    }
 };

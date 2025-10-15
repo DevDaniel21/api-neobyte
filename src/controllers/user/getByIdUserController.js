@@ -5,8 +5,14 @@ export const getByIdUserController = async (req, res) => {
 
     const result = await getById(+id);
 
-    res.json({
-        message: `Usuário encontrado com sucesso!`,
-        profile: result,
-    });
+    if (result) {
+        res.json({
+            message: `Usuário encontrado com sucesso!`,
+            profile: result,
+        });
+    } else {
+        if (result == null) {
+            res.status(404).json({ message: 'Usuário não encontrado!' });
+        }
+    }
 };

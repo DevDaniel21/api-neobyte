@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/', createUserController);
 router.get('/', listUserController);
-router.get('/:email', getByEmailUserController);
+router.get('/email/:email', getByEmailUserController);
 router.get('/:id', getByIdUserController);
 router.put('/:id', editUserController);
 router.delete('/:id', deleteUserController);

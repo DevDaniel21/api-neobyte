@@ -12,97 +12,77 @@ model carrinho {
   user_id    Int
   produto_id Int
   quantidade Int
-  produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_produto1")
   user       user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_user1")
+  produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_produto1")
 
   @@id([user_id, produto_id])
-  @@index([produto_id], map: "fk_user_has_produto_produto1_idx")
-  @@index([user_id], map: "fk_user_has_produto_user1_idx")
+  @@index([user_id], map: "fk_cliente_has_produto_cliente1_idx")
+  @@index([produto_id], map: "fk_cliente_has_produto_produto1_idx")
 }
 
 model comentario {
-  id         Int      @unique(map: "id_UNIQUE") @default(autoincrement())
-  texto      String?  @db.VarChar(90)
+  id         Int     @default(autoincrement())
+  estrela    Int
   user_id    Int
   produto_id Int
-  produto    produto  @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comentario_produto1")
-  user       user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comentario_user1")
-  imagem     imagem[]
+  texto      String? @db.VarChar(225)
+  user       user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comentario_user1")
+  produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comentario_produto1")
 
   @@id([id, user_id, produto_id])
   @@index([produto_id], map: "fk_comentario_produto1_idx")
-  @@index([user_id], map: "fk_comentario_user1_idx")
+  @@index([user_id], map: "fk_comentario_cliente1_idx")
 }
 
 model endereco {
-  id          Int     @unique(map: "id_UNIQUE")
-  nome        String? @db.VarChar(45)
-  estado      String? @db.VarChar(45)
-  cidade      String? @db.VarChar(45)
-  bairro      String? @db.VarChar(45)
-  rua         String? @db.VarChar(45)
-  numero      String? @db.VarChar(45)
-  complemento String? @db.VarChar(45)
+  id          Int     @default(autoincrement())
   user_id     Int
+  estado      String  @db.VarChar(2)
+  cidade      String  @db.VarChar(45)
+  bairro      String  @db.VarChar(45)
+  rua         String  @db.VarChar(45)
+  numero      Int
+  complemento String? @db.VarChar(45)
   user        user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_endereco_user1")
 
   @@id([id, user_id])
-  @@index([user_id], map: "fk_endereco_user1_idx")
+  @@index([user_id], map: "fk_endereco_cliente1_idx")
 }
 
 model favorito {
-  user_id    Int
   produto_id Int
-  produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_produto3")
+  user_id    Int
   user       user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_user3")
+  produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_produto3")
 
-  @@id([user_id, produto_id])
-  @@index([produto_id], map: "fk_user_has_produto_produto3_idx")
-  @@index([user_id], map: "fk_user_has_produto_user3_idx")
-}
-
-model imagem {
-  id                    Int        @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  caminho_arquivo       String     @db.VarChar(255)
-  produto_id            Int
-  comentario_id         Int
-  comentario_user_id    Int
-  comentario_produto_id Int
-  user_id               Int
-  comentario            comentario @relation(fields: [comentario_id, comentario_user_id, comentario_produto_id], references: [id, user_id, produto_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_imagem_comentario1")
-  produto               produto    @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_imagem_produto1")
-  user                  user       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_imagem_user1")
-
-  @@index([comentario_id, comentario_user_id, comentario_produto_id], map: "fk_imagem_comentario1_idx")
-  @@index([produto_id], map: "fk_imagem_produto1_idx")
-  @@index([user_id], map: "fk_imagem_user1_idx")
+  @@id([produto_id, user_id])
+  @@index([user_id], map: "fk_produto_has_cliente_cliente1_idx")
+  @@index([produto_id], map: "fk_produto_has_cliente_produto1_idx")
 }
 
 model produto {
-  id            Int          @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   nome          String       @db.VarChar(45)
   descricao     String       @db.LongText
   categoria     String       @db.VarChar(45)
   valor         Int
   valordesconto Int?
-  avalicao      Int?
+  capa          String?      @db.VarChar(255)
   carrinho      carrinho[]
   comentario    comentario[]
   favorito      favorito[]
-  imagem        imagem[]
 }
 
 model user {
-  id         Int          @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  id         Int          @id @default(autoincrement())
   nome       String       @db.VarChar(45)
   email      String       @unique(map: "email_UNIQUE") @db.VarChar(60)
   senha      String       @db.VarChar(15)
   telefone   Int?         @unique(map: "telefone_UNIQUE")
-  foto       String?      @db.VarChar(45)
+  avatar     String?      @db.VarChar(255)
   cpf        String?      @db.VarChar(12)
   carrinho   carrinho[]
   comentario comentario[]
   endereco   endereco[]
   favorito   favorito[]
-  imagem     imagem[]
 }

@@ -67,7 +67,7 @@ O nome é no máximo 45 caracteres, email no máximo 65 senha é no máximo 15. 
     "senha": "senha123"
 }
 ```
-### `GET` Listar produtos
+### `GET` Listar usuários
 https://localhost:3000/user/
 ### `GET` Listar usuário pelo email
 https://localhost:3000/user/email/:email
@@ -132,7 +132,7 @@ https://localhost:3000/product/:id
 ### `POST` Criar favorito
 https://localhost:3000/favorite/
 
-No body é necessário tem o user_id e product_id.
+No body é necessário ter o user_id e product_id.
 ```bash
 {
     "user_id": 21,
@@ -149,5 +149,57 @@ No body é necessário tem o user_id e product_id.
 {
     "user_id": 21,
     "product_id": 21,
+}
+```
+
+
+## Endereço
+
+### `POST` Criar endereço
+https://localhost:3000/adress/
+
+No body é necessário ter o user_id.
+```bash
+{
+    "user_id": 21,
+    "estado": "SIGLA",
+    "cidade": "Nome da cidade",
+    "bairro": "Nome do bairro",
+    "rua": "Nome da rua",
+    "numero": 21,
+    "complemento": "E o complemento"
+}
+```
+### `GET` Listar endereços pelo id
+https://localhost:3000/adress/
+
+No body é necessário ter o id do endereço e o user_id.
+```bash
+{
+    "id": 1,
+    "user_id": 21
+}
+```
+### `GET` Listar endereços pelo user_id
+https://localhost:3000/adress/user/:user_id
+### `PUT` Editar endereço
+https://localhost:3000/adress/
+
+No body é necessário ter o id do endereço, o user_id e o conteúdo do endereço que deseja mudar.
+```bash
+{
+    "id": 21,
+    "user_id": 21,
+    "cidade": "Nome da cidade atualizada"
+}
+```
+### `DELETE` Deletar endereço
+https://localhost:3000/adress/
+
+No body é necessário tem o id e o user_id.
+```bash
+{
+    "id": 21,
+    "user_id": 21,
 }
 ```

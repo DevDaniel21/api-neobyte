@@ -1,10 +1,12 @@
 import { update } from '../../models/adressModel.js';
 
 export const editAdressController = async (req, res) => {
-    const id = req.params.id;
+    const { id, user_id } = req.body;
     const adress = req.body;
+    delete adress.id;
+    delete adress.user_id;    
 
-    const result = await update(+id, adress);
+    const result = await update(+id, +user_id, adress);
 
     if (result) {
         res.json({

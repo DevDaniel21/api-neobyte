@@ -8,9 +8,9 @@ import { getByUserIdAdressController } from '../controllers/adress/getByUserIdAd
 const router = express.Router();
 
 router.post('/', createAdressController);
-router.get('/user/:userId', getByUserIdAdressController);
-router.get('/:id', getByIdAdressController);
-router.put('/:id', editAdressController);
-router.delete('/:id', deleteAdressController);
+router.get('/user/:user_id', getByUserIdAdressController);
+router.get('/', getByIdAdressController);
+router.put('/', editAdressController);
+router.delete('/', deleteAdressController);
 
 export default router;

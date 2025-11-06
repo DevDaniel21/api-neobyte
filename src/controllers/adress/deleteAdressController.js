@@ -1,9 +1,9 @@
 import { remove } from '../../models/adressModel.js';
 
 export const deleteAdressController = async (req, res) => {
-    const id = req.params.id;
+    const { id, user_id } = req.body;
 
-    const result = await remove(+id);
+    const result = await remove(+id, +user_id);
 
     if (result) {
         res.json({

@@ -8,27 +8,33 @@ export const create = async (adress) => {
     });
 };
 
-export const update = async (id, adress) => {
+export const update = async (id, user_id, adress) => {
     return await prisma.endereco.update({
         data: adress,
-        where: { id },
+        where: {
+            id_user_id: { id, user_id },
+        },
     });
 };
 
 export const getByUserId = async (user_id) => {
-    return await prisma.endereco.findUnique({
+    return await prisma.endereco.findMany({
         where: { user_id },
     });
 };
 
-export const getById = async (id) => {
+export const getById = async (id, user_id) => {
     return await prisma.endereco.findUnique({
-        where: { id },
+        where: {
+            id_user_id: { id, user_id },
+        },
     });
 };
 
-export const remove = async (id) => {
+export const remove = async (id, user_id) => {
     return await prisma.endereco.delete({
-        where: { id },
+        where: {
+            id_user_id: { id, user_id },
+        },
     });
 };

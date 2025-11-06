@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/', createFavoriteController);
 router.get('/:user_id', getByUserIdFavoriteController);
 router.delete('/', deleteFavoriteController);
+// TODO nome da rota
 
 export default router;

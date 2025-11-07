@@ -1,9 +1,9 @@
 import { getById } from '../../models/commentModel.js';
 
 export const getByIdCommentController = async (req, res) => {
-    const { id, user_id, produto_id } = req.body;
+    const id = req.params.id;
 
-    const result = await getById(+id, +user_id, +produto_id);
+    const result = await getById(+id);
 
     if (result) {
         res.json({

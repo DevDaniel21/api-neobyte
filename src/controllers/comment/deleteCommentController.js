@@ -1,9 +1,9 @@
 import { remove } from '../../models/commentModel.js';
 
 export const deleteCommentController = async (req, res) => {
-    const { id, user_id, produto_id } = req.body;
+    const id = req.params.id;
 
-    const result = await remove(+id, +user_id, +produto_id);
+    const result = await remove(+id);
 
     if (result) {
         res.json({

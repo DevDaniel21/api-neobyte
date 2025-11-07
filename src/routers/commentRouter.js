@@ -10,9 +10,9 @@ const router = express.Router();
 
 router.post('/', createCommentController);
 router.get('/', listCommentController);
-router.get('/id/', getByIdCommentController);
+router.get('/:id', getByIdCommentController);
 router.get('/product/:produto_id', listByProductCommentController);
-router.put('/', editCommentController);
-router.delete('/', deleteCommentController);
+router.put('/:id', editCommentController);
+router.delete('/:id', deleteCommentController);
 
 export default router;

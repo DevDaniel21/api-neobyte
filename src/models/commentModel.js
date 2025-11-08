@@ -26,6 +26,9 @@ export const listByProduct = async (produto_id) => {
         where: {
             produto_id,
         },
+        include: {
+            user: true
+        }
     });
 };
 
@@ -34,6 +37,9 @@ export const getById = async (id) => {
         where: {
             id,
         },
+        include: {
+            user: true
+        }
     });
 };
 

@@ -35,6 +35,7 @@ model comentario {
 
 model endereco {
   id          Int     @id @default(autoincrement())
+  nome        String  @db.VarChar(45)
   estado      String  @db.VarChar(2)
   cidade      String  @db.VarChar(45)
   bairro      String  @db.VarChar(45)

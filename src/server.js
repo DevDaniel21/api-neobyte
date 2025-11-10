@@ -10,7 +10,7 @@ import cartRouter from './routers/cartRouter.js';
 // import { verifier } from './middleware/verifier.js'
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // app.use(logger())
 app.use(cors());

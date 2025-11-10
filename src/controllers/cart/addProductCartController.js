@@ -3,6 +3,7 @@ import { add } from '../../models/cartModel.js';
 export const addProductCartController = async (req, res) => {
     try {
         const { user_id, produto_id } = req.body;
+        const data = req.body;
 
         if (!user_id || !produto_id) {
             return res.json({
@@ -10,7 +11,10 @@ export const addProductCartController = async (req, res) => {
             });
         }
 
-        const produtoAdicionado = await add(+user_id, +produto_id);
+        data.user_id = +user_id;
+        data.produto_id = +produto_id;
+
+        const produtoAdicionado = await add(data);
 
         if (produtoAdicionado) {
             res.json({

@@ -16,7 +16,14 @@ export const update = async (id, product) => {
 };
 
 export const list = async () => {
-    return prisma.produto.findMany();
+    return prisma.produto.findMany({
+        select: {
+            id: true,
+            nome: true,
+            valor: true,
+            capa: true,
+        },
+    });
 };
 
 export const getById = async (id) => {

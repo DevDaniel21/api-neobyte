@@ -27,8 +27,13 @@ export const listByProduct = async (produto_id) => {
             produto_id,
         },
         include: {
-            user: true
-        }
+            user: {
+                select: {
+                    id: true,
+                    nome: true,
+                },
+            },
+        },
     });
 };
 
@@ -38,8 +43,8 @@ export const getById = async (id) => {
             id,
         },
         include: {
-            user: true
-        }
+            user: true,
+        },
     });
 };
 

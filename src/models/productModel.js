@@ -22,6 +22,13 @@ export const list = async () => {
 export const getById = async (id) => {
     return await prisma.produto.findUnique({
         where: { id },
+        include: {
+            comentario: {
+                include: {
+                    user: true
+                }
+            }
+        }
     });
 };
 

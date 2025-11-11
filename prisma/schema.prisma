@@ -13,7 +13,7 @@ model carrinho {
   produto_id Int
   quantidade Int
   produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_produto1")
-  user       user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_user1")
+  user       user    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_has_produto_user1")
 
   @@id([user_id, produto_id])
   @@index([user_id], map: "fk_cliente_has_produto_cliente1_idx")
@@ -27,7 +27,7 @@ model comentario {
   produto_id Int
   estrela    Int
   produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comentario_produto1")
-  user       user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_comentario_user1")
+  user       user    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_comentario_user1")
 
   @@index([produto_id], map: "fk_comentario_produto1_idx")
   @@index([user_id], map: "fk_comentario_cliente1_idx")
@@ -43,7 +43,7 @@ model endereco {
   numero      Int
   complemento String? @db.VarChar(45)
   user_id     Int
-  user        user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_endereco_user1")
+  user        user    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_endereco_user1")
 
   @@index([user_id], map: "fk_endereco_cliente1_idx")
 }
@@ -52,7 +52,7 @@ model favorito {
   user_id    Int
   produto_id Int
   produto    produto @relation(fields: [produto_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_produto3")
-  user       user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_has_produto_user3")
+  user       user    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_has_produto_user3")
 
   @@id([produto_id, user_id])
   @@index([user_id], map: "fk_produto_has_cliente_cliente1_idx")

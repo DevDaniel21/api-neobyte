@@ -25,10 +25,15 @@ export const getById = async (id) => {
         include: {
             comentario: {
                 include: {
-                    user: true
-                }
-            }
-        }
+                    user: {
+                        select: {
+                            id: true,
+                            nome: true,
+                        },
+                    },
+                },
+            },
+        },
     });
 };
 

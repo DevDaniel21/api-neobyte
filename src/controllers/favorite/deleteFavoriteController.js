@@ -2,15 +2,15 @@ import { remove } from '../../models/favoriteModel.js';
 
 export const deleteFavoriteController = async (req, res) => {
     try {
-        const { user_id, product_id } = req.body;
+        const { user_id, produto_id } = req.body;
 
-        if (!user_id || !product_id) {
+        if (!user_id || !produto_id) {
             return res.json({
-                error: 'Erro, user_id e product_id é obrigatório!',
+                error: 'Erro, user_id e produto_id é obrigatório!',
             });
         }
 
-        const favorite = await remove(+user_id, +product_id);
+        const favorite = await remove(+user_id, +produto_id);
 
         if (favorite) {
             res.json({

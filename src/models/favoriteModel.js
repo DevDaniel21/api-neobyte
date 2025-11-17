@@ -26,8 +26,8 @@ export const getByUserIdAndProdutoId = async (user_id, produto_id) => {
     return await prisma.favorito.findUnique({
         where: {
             produto_id_user_id: {
-                user_id: user_id,
                 produto_id: produto_id,
+                user_id: user_id,
             }
         },
     });

@@ -22,13 +22,24 @@ export const getByUserId = async (user_id) => {
     });
 };
 
+export const getByUserIdAndProdutoId = async (user_id, produto_id) => {
+    return await prisma.favorito.findUnique({
+        where: {
+            produto_id_user_id: {
+                user_id: user_id,
+                produto_id: produto_id,
+            }
+        },
+    });
+};
+
 export const remove = async (user_id, produto_id) => {
     return await prisma.favorito.delete({
         where: {
             produto_id_user_id: {
                 user_id: user_id,
                 produto_id: produto_id,
-            }
+            },
         },
     });
 };

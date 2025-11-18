@@ -14,8 +14,7 @@ export const update = async (user_id, produto_id, quantidade) => {
             quantidade,
         },
         where: {
-            user_id,
-            produto_id,
+            user_id_produto_id: { user_id, produto_id },
         },
     });
 };
@@ -34,8 +33,7 @@ export const getByUserId = async (user_id) => {
 export const remove = async (user_id, produto_id) => {
     return await prisma.carrinho.delete({
         where: {
-            user_id,
-            produto_id,
+            user_id_produto_id: { user_id, produto_id },
         },
     });
 };

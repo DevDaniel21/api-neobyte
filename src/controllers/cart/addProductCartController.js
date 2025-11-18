@@ -1,6 +1,28 @@
-import { add } from '../../models/cartModel.js';
+import { add, getByUserId } from '../../models/cartModel.js';
 
 export const addProductCartController = async (req, res) => {
+    let produtoAdicionado = null;
+    try {
+        const { user_id, produto_id } = req.body;
+
+        if (user_id && produto_id) {
+            const cart = await getByUserId(+user_id);
+            if (cart) {
+                produtoAdicionado = cart.some(
+                    (item) => item.produto_id === +produto_id
+                );
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao buscar carrinho do usuário');
+    }
+
+    if (produtoAdicionado) {
+        return res.json({
+            error: 'Erro, produto já adicionado ao carrinho',
+        });
+    }
+
     try {
         const { user_id, produto_id } = req.body;
         const data = req.body;
@@ -23,6 +45,6 @@ export const addProductCartController = async (req, res) => {
             });
         }
     } catch (error) {
-        console.error(error);
+        return console.error(error);
     }
 };

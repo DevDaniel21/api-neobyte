@@ -1,9 +1,9 @@
 import { getById } from '../../models/adressModel.js';
 
 export const getByIdAdressController = async (req, res) => {
-    const { id, user_id } = req.body;
+    const { id } = req.body;
 
-    const result = await getById(+id, +user_id);
+    const result = await getById(+id);
 
     if (result) {
         res.json({

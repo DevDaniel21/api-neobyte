@@ -12,7 +12,8 @@ export const update = async (id, user_id, adress) => {
     return await prisma.endereco.update({
         data: adress,
         where: {
-            id_user_id: { id, user_id },
+            id: id,
+            user_id: user_id,
         },
     });
 };
@@ -23,10 +24,10 @@ export const getByUserId = async (user_id) => {
     });
 };
 
-export const getById = async (id, user_id) => {
+export const getById = async (id) => {
     return await prisma.endereco.findUnique({
         where: {
-            id_user_id: { id, user_id },
+            id: id,
         },
     });
 };
@@ -34,7 +35,8 @@ export const getById = async (id, user_id) => {
 export const remove = async (id, user_id) => {
     return await prisma.endereco.delete({
         where: {
-            id_user_id: { id, user_id },
+            id,
+            user_id,
         },
     });
 };

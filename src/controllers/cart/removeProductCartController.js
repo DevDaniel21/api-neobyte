@@ -1,6 +1,6 @@
-import { remove } from '../../models/favoriteModel.js';
+import { remove } from '../../models/cartModel.js';
 
-export const deleteFavoriteController = async (req, res) => {
+export const removeProductCartController = async (req, res) => {
     try {
         const { user_id, produto_id } = req.body;
 
@@ -10,12 +10,12 @@ export const deleteFavoriteController = async (req, res) => {
             });
         }
 
-        const favorite = await remove(+user_id, +produto_id);
+        const produtoAdicionado = await remove(+user_id, +produto_id);
 
-        if (favorite) {
+        if (produtoAdicionado) {
             res.json({
-                message: 'Favorite removido com sucesso!',
-                favorite: favorite,
+                message: 'Produto removido com sucesso!',
+                produtoAdicionado: produtoAdicionado,
             });
         }
     } catch (error) {

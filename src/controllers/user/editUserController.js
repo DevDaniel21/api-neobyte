@@ -6,8 +6,12 @@ export const editUserController = async (req, res) => {
 
     const result = await update(+id, profile);
 
-    res.json({
-        message: `Usuário editado com sucesso!`,
-        profile: result,
-    });
+    if (result) {
+        res.json({
+            message: `Usuário editado com sucesso!`,
+            profile: result,
+        });
+    } else {
+        res.json({ message: "Erro ao editar!" });
+    }
 };

@@ -1,9 +1,9 @@
-import { getById } from '../../models/userModel.js';
+import { getByEmail } from '../../models/userModel.js';
 
-export const getByIdUserController = async (req, res) => {
-    const id = req.params.id;
+export const getByEmailUserController = async (req, res) => {
+    const email = req.params.email;
 
-    const result = await getById(+id);
+    const result = await getByEmail(email);
 
     if (result) {
         res.json({

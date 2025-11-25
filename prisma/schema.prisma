@@ -71,14 +71,16 @@ model produto {
   carrinho      carrinho[]
   comentario    comentario[]
   favorito      favorito[]
+
+  @@map("produto") // Garante que use o nome correto da tabela
 }
 
 model user {
   id         Int          @id @default(autoincrement())
-  nome       String?       @db.VarChar(45)
+  nome       String?      @db.VarChar(45)
   email      String       @unique(map: "email_UNIQUE") @db.VarChar(60)
   senha      String       @db.VarChar(15)
-  telefone   String?         @unique(map: "telefone_UNIQUE") @db.VarChar(11)
+  telefone   String?      @unique(map: "telefone_UNIQUE") @db.VarChar(11)
   cpf        String?      @db.VarChar(12)
   avatar     String?      @db.VarChar(255)
   carrinho   carrinho[]

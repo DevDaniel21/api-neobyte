@@ -21,6 +21,7 @@ export const list = async () => {
             id: true,
             nome: true,
             valor: true,
+            valordesconto: true,
             capa: true,
         },
     });

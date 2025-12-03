@@ -1,50 +1,56 @@
-import { add, getByUserId } from '../../models/cartModel.js';
+// api-neobyte/src/controllers/cart/addProductCartController.js
+import { create } from '../../models/cartModel.js';
 
 export const addProductCartController = async (req, res) => {
-    let produtoAdicionado = null;
     try {
-        const { user_id, produto_id } = req.body;
+        const { user_id, produto_id, quantidade = 1 } = req.body;
 
-        if (user_id && produto_id) {
-            const cart = await getByUserId(+user_id);
-            if (cart) {
-                produtoAdicionado = cart.some(
-                    (item) => item.produto_id === +produto_id
-                );
-            }
-        }
-    } catch (error) {
-        console.error('Erro ao buscar carrinho do usuário');
-    }
-
-    if (produtoAdicionado) {
-        return res.json({
-            error: 'Erro, produto já adicionado ao carrinho',
-        });
-    }
-
-    try {
-        const { user_id, produto_id } = req.body;
-        const data = req.body;
-
+        // Validação dos dados
         if (!user_id || !produto_id) {
-            return res.json({
-                error: 'Erro, user_id e produto_id são necessários!',
+            return res.status(400).json({
+                message: 'user_id e produto_id são obrigatórios'
             });
         }
 
-        data.user_id = +user_id;
-        data.produto_id = +produto_id;
+        console.log(`🛒 Adicionando produto ${produto_id} ao carrinho do usuário ${user_id}`);
 
-        const produtoAdicionado = await add(data);
+        const result = await create(+user_id, +produto_id, +quantidade);
 
-        if (produtoAdicionado) {
-            res.json({
-                message: 'Produto adicionado com sucesso!',
-                produtoAdicionado: produtoAdicionado,
+        if (result) {
+            // Verifica se foi atualizado ou criado novo
+            const message = result.quantidade > quantidade
+                ? 'Quantidade atualizada no carrinho!'
+                : 'Produto adicionado ao carrinho com sucesso!';
+
+            return res.status(200).json({
+                message: message,
+                produtoAdicionado: result
+            });
+        } else {
+            return res.status(500).json({
+                message: 'Erro ao adicionar ao carrinho'
             });
         }
+
     } catch (error) {
-        return console.error(error);
+        console.error('Erro ao adicionar produto ao carrinho:', error);
+
+        // Tratamento de erros específicos
+        if (error.code === 'P2003') {
+            return res.status(404).json({
+                message: 'Usuário ou produto não encontrado'
+            });
+        }
+
+        if (error.code === 'P2002') {
+            return res.status(409).json({
+                message: 'Item já existe no carrinho'
+            });
+        }
+
+        return res.status(500).json({
+            message: 'Erro interno do servidor',
+            error: error.message
+        });
     }
 };

@@ -10,12 +10,16 @@ export const getByUserIdAndProdutoIdFavorite = async (req, res) => {
             });
         }
 
-        const favorite = await getByUserIdAndProdutoId(+user_id, +produto_id);
+        const favorite = await getByUserIdAndProdutoId(+user_id + produto_id);
 
-        // Retorna null se não encontrar, não 404
-        return res.json({ favorite: favorite || null });
+        if (!favorite) {
+            return res.status(404).json({
+                message: 'Favorito não encontrado',
+            });
+        }
+
+        return res.json({ favorite });
     } catch (error) {
-        console.error(error);
         return res.json({
             error: 'Erro ao buscar favorito',
         });
